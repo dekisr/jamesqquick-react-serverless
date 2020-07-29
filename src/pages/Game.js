@@ -7,12 +7,13 @@ import {
   StyledCharacter,
 } from '../styled/Game'
 import { Strong } from '../styled/Random'
+import { useScore } from '../contexts/ScoreContext'
 
 const Game = () => {
-  const MAX_SECONDS = 50
+  const MAX_SECONDS = 5
   const characters = 'abcdefghijklmnopqrstuvwxyz0123456789'
   const [currentCharacter, setCurrentCharacter] = useState('')
-  const [score, setScore] = useState(0)
+  const [score, setScore] = useScore()
   const [ms, setMs] = useState(0)
   const [seconds, setSeconds] = useState(MAX_SECONDS)
   const history = useHistory()
@@ -37,14 +38,17 @@ const Game = () => {
     return (zeros + num).slice(-length)
   }
 
-  const keyUpHandler = useCallback((e) => {
-    if (e.key === currentCharacter) {
-      setScore((prevScore) => prevScore + 1)
-    } else {
-      score && setScore((prevScore) => prevScore - 1)
-    }
-    setRandomCharacter()
-  }, [currentCharacter, score])
+  const keyUpHandler = useCallback(
+    (e) => {
+      if (e.key === currentCharacter) {
+        setScore((prevScore) => prevScore + 1)
+      } else {
+        score && setScore((prevScore) => prevScore - 1)
+      }
+      setRandomCharacter()
+    },
+    [currentCharacter, score, setScore]
+  )
 
   const setRandomCharacter = () => {
     const randomInt = Math.floor(Math.random() * 36)
@@ -53,10 +57,11 @@ const Game = () => {
 
   useEffect(() => {
     setRandomCharacter()
+    setScore(0)
     const currentTime = new Date()
     const interval = setInterval(() => updateTime(currentTime), 1)
     return () => clearInterval(interval)
-  }, [updateTime])
+  }, [updateTime, setScore])
 
   useEffect(() => {
     if (seconds <= -1) {
