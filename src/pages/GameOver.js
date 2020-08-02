@@ -3,6 +3,7 @@ import { useScore } from '../contexts/ScoreContext'
 import { useHistory } from 'react-router-dom'
 import { StyledLink } from '../styled/Navbar'
 import { StyledCharacter } from '../styled/Game'
+import { StyledTitle } from '../styled/Random'
 
 const GameOver = () => {
   const [score] = useScore()
@@ -43,11 +44,15 @@ const GameOver = () => {
 
   return (
     <div>
-      <h1>GameOver</h1>
+      <StyledTitle>GameOver</StyledTitle>
+      <h2>{scoreMessage}</h2>
       <StyledCharacter>{score}</StyledCharacter>
-      <p>{scoreMessage}</p>
-      <StyledLink to="/">Go Home</StyledLink>
-      <StyledLink to="/game">Play Again</StyledLink>
+      <div>
+        <StyledLink to="/">Go Home</StyledLink>
+      </div>
+      <div>
+        <StyledLink to="/game">Play Again</StyledLink>
+      </div>
     </div>
   )
 }
