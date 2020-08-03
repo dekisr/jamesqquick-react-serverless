@@ -1,17 +1,22 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react'
 
 import Home from './pages/Home'
 import Game from './pages/Game'
 import HighScores from './pages/HighScores'
 import GameOver from './pages/GameOver'
 import Navbar from './components/Navbar'
+
+import Global from './styled/Global'
 import { Container } from './styled/Container'
 import { Main } from './styled/Main'
-import Global from './styled/Global'
 
 function App() {
-  return (
+  const { isLoading } = useAuth0()
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
     <Router>
       <Global />
       <Main>

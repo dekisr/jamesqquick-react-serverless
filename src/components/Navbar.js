@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react'
+
 import {
   StyledNavbar,
   StyledNavBrand,
@@ -9,6 +11,7 @@ import {
 import { Accent } from '../styled/Random'
 
 const Navbar = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0()
   return (
     <StyledNavbar>
       <StyledNavBrand>
@@ -23,6 +26,15 @@ const Navbar = () => {
         <li>
           <StyledLink to="/highscores">High Scores</StyledLink>
         </li>
+        {isAuthenticated ? (
+          <li>
+            <button onClick={() => logout()}>Log Out</button>
+          </li>
+        ) : (
+          <li>
+            <button onClick={() => loginWithRedirect()}>Log In</button>
+          </li>
+        )}
       </StyledNavItems>
     </StyledNavbar>
   )
