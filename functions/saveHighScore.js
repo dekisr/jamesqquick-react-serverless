@@ -1,6 +1,17 @@
 const { table, getHighScores } = require('./utils/airtable')
+const { getAccessTokenFromHeaders } = require('./utils/auth')
 
 exports.handler = async (event) => {
+  const token = getAccessTokenFromHeaders(event.headers)
+  if (!token) {
+    return {
+      statusCode: 401,
+      body: JSON.stringify({
+        error: 'User is not logged in or the token is invalid.',
+      }),
+    }
+  }
+
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,

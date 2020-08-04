@@ -36,9 +36,13 @@ const GameOver = () => {
           '/.netlify/functions/saveHighScore',
           options
         )
+        console.log('1', response)
         const data = await response.json()
+        console.log('2', data)
         if (data.id) {
           setScoreMessage('Congrats! You got a high score!')
+        } else if (data.error) {
+          setScoreMessage(`Error: ${data.error}`)
         } else {
           setScoreMessage('Sorry, not a high score...')
         }
@@ -47,7 +51,7 @@ const GameOver = () => {
         console.log(error)
       }
     }
-    if (isAuthenticated) {
+    if (isAuthenticated && score !== -1) {
       saveHighScore()
     }
   }, [score, getAccessTokenSilently, isAuthenticated])
