@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useScore } from '../contexts/ScoreContext'
 import { useHistory } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react'
+
+import { useScore } from '../contexts/ScoreContext'
+
 import { StyledLink } from '../styled/Navbar'
 import { StyledCharacter } from '../styled/Game'
 import { StyledTitle } from '../styled/Random'
@@ -8,6 +11,7 @@ import { StyledTitle } from '../styled/Random'
 const GameOver = () => {
   const [score] = useScore()
   const [scoreMessage, setScoreMessage] = useState('')
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0()
   const history = useHistory()
 
   if (score === -1) {
@@ -17,8 +21,12 @@ const GameOver = () => {
   useEffect(() => {
     const saveHighScore = async () => {
       try {
+        const token = await getAccessTokenSilently()
         const options = {
           method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({
             name: 'HIGH?',
             score,
@@ -39,13 +47,19 @@ const GameOver = () => {
         console.log(error)
       }
     }
-    saveHighScore()
-  }, [score])
+    if (isAuthenticated) {
+      saveHighScore()
+    }
+  }, [score, getAccessTokenSilently, isAuthenticated])
 
   return (
     <div>
       <StyledTitle>GameOver</StyledTitle>
-      <h2>{scoreMessage}</h2>
+      {!isAuthenticated ? (
+        <h2>You should log in to compete for high scores!</h2>
+      ) : (
+        <h2>{scoreMessage}</h2>
+      )}
       <StyledCharacter>{score}</StyledCharacter>
       <div>
         <StyledLink to="/">Go Home</StyledLink>

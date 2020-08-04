@@ -14,6 +14,7 @@ ReactDOM.render(
       domain="jqq-typegame-course.us.auth0.com"
       clientId="WbeHQaIJl5BAxJ3ao9lMLy7ALwSaQlcp"
       redirectUri={window.location.origin}
+      audience="https://learnbuildtypeapi"
     >
       <ScoreProvider>
         <App />
