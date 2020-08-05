@@ -14,28 +14,30 @@ import { Main } from './styled/Main'
 
 function App() {
   const { isLoading } = useAuth0()
-  return isLoading ? (
-    <p>Loading...</p>
-  ) : (
+  return (
     <Router>
       <Global />
       <Main>
         <Container>
           <Navbar />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/game">
-              <Game />
-            </Route>
-            <Route path="/highscores">
-              <HighScores />
-            </Route>
-            <Route path="/gameover">
-              <GameOver />
-            </Route>
-          </Switch>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/game">
+                <Game />
+              </Route>
+              <Route path="/highscores">
+                <HighScores />
+              </Route>
+              <Route path="/gameover">
+                <GameOver />
+              </Route>
+            </Switch>
+          )}
         </Container>
       </Main>
     </Router>

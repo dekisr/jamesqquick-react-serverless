@@ -4,6 +4,7 @@ import { StyledTitle } from '../styled/Random'
 
 const HighScores = () => {
   const [highScores, setHighScores] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     console.log('getting high scores...')
     const loadHighScores = async () => {
@@ -11,6 +12,7 @@ const HighScores = () => {
         const response = await fetch('/.netlify/functions/getHighScores')
         const scores = await response.json()
         setHighScores(scores)
+        setIsLoading(false)
       } catch (error) {
         console.log(error)
       }
@@ -20,13 +22,17 @@ const HighScores = () => {
   return (
     <div>
       <StyledTitle>High Scores</StyledTitle>
-      <ScoresList>
-        {highScores.map((score, index) => (
-          <ScoreLI key={score.id}>
-            {index + 1}. {score.fields.name} - {score.fields.score}
-          </ScoreLI>
-        ))}
-      </ScoresList>
+      {isLoading ? (
+        <p>Loading high scores...</p>
+      ) : (
+        <ScoresList>
+          {highScores.map((score, index) => (
+            <ScoreLI key={score.id}>
+              {index + 1}. {score.fields.name} - {score.fields.score}
+            </ScoreLI>
+          ))}
+        </ScoresList>
+      )}
     </div>
   )
 }

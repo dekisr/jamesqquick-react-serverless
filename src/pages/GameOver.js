@@ -60,7 +60,7 @@ const GameOver = () => {
       {!isAuthenticated ? (
         <h2>You should log in to compete for high scores!</h2>
       ) : (
-        <h2>{scoreMessage}</h2>
+        <h2>{!scoreMessage ? 'checking score...' : scoreMessage}</h2>
       )}
       <StyledCharacter>{score}</StyledCharacter>
       <div>
