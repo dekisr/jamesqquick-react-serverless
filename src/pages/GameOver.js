@@ -28,7 +28,7 @@ const GameOver = () => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            name: 'HIGH?',
+            // name: 'testHCname',
             score,
           }),
         }
@@ -36,9 +36,7 @@ const GameOver = () => {
           '/.netlify/functions/saveHighScore',
           options
         )
-        console.log('1', response)
         const data = await response.json()
-        console.log('2', data)
         if (data.id) {
           setScoreMessage('Congrats! You got a high score!')
         } else if (data.error) {
@@ -46,7 +44,7 @@ const GameOver = () => {
         } else {
           setScoreMessage('Sorry, not a high score...')
         }
-        console.log(data)
+        // console.log(data)
       } catch (error) {
         console.log(error)
       }
