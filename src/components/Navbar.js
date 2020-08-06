@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
+import useTheme from '../hooks/UseTheme'
+
 import {
   StyledNavbar,
   StyledNavBrand,
@@ -10,7 +12,7 @@ import {
 } from '../styled/Navbar'
 import { Accent } from '../styled/Random'
 
-const Navbar = () => {
+const Navbar = ({ toggleTheme }) => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0()
   return (
     <StyledNavbar>
@@ -35,6 +37,9 @@ const Navbar = () => {
             <button onClick={() => loginWithRedirect()}>Log In</button>
           </li>
         )}
+        <li>
+          <button onClick={toggleTheme}>Toggle Theme</button>
+        </li>
       </StyledNavItems>
     </StyledNavbar>
   )

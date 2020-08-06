@@ -8,6 +8,8 @@ import HighScores from './pages/HighScores'
 import GameOver from './pages/GameOver'
 import Navbar from './components/Navbar'
 
+import useTheme from './hooks/UseTheme'
+
 import Global from './styled/Global'
 import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from './styled/Themes'
@@ -16,15 +18,15 @@ import { Main } from './styled/Main'
 
 function App() {
   const { isLoading } = useAuth0()
-  const theme = 'light'
-  const currentTheme = theme === 'light' ? lightTheme : darkTheme
+  const [theme, toggleTheme] = useTheme()
+
   return (
     <Router>
-      <ThemeProvider theme={currentTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <Global />
         <Main>
           <Container>
-            <Navbar />
+            <Navbar toggleTheme={toggleTheme} />
             {isLoading ? (
               <p>Loading...</p>
             ) : (
