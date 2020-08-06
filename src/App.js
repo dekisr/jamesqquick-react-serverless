@@ -9,37 +9,43 @@ import GameOver from './pages/GameOver'
 import Navbar from './components/Navbar'
 
 import Global from './styled/Global'
+import { ThemeProvider } from 'styled-components'
+import { lightTheme, darkTheme } from './styled/Themes'
 import { Container } from './styled/Container'
 import { Main } from './styled/Main'
 
 function App() {
   const { isLoading } = useAuth0()
+  const theme = 'light'
+  const currentTheme = theme === 'light' ? lightTheme : darkTheme
   return (
     <Router>
-      <Global />
-      <Main>
-        <Container>
-          <Navbar />
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/game">
-                <Game />
-              </Route>
-              <Route path="/highscores">
-                <HighScores />
-              </Route>
-              <Route path="/gameover">
-                <GameOver />
-              </Route>
-            </Switch>
-          )}
-        </Container>
-      </Main>
+      <ThemeProvider theme={currentTheme}>
+        <Global />
+        <Main>
+          <Container>
+            <Navbar />
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/game">
+                  <Game />
+                </Route>
+                <Route path="/highscores">
+                  <HighScores />
+                </Route>
+                <Route path="/gameover">
+                  <GameOver />
+                </Route>
+              </Switch>
+            )}
+          </Container>
+        </Main>
+      </ThemeProvider>
     </Router>
   )
 }

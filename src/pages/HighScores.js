@@ -15,6 +15,8 @@ const HighScores = () => {
         setIsLoading(false)
       } catch (error) {
         console.log(error)
+        alert('Failed to fetch high scores...')
+        setIsLoading(false)
       }
     }
     loadHighScores()
