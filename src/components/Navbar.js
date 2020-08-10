@@ -9,8 +9,10 @@ import {
   StyledNavBrand,
   StyledNavItems,
   StyledLink,
+  StyledButtonLink,
 } from '../styled/Navbar'
 import { Accent } from '../styled/Random'
+import { StyledButton } from '../styled/Buttons'
 
 const Navbar = ({ toggleTheme }) => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0()
@@ -30,15 +32,19 @@ const Navbar = ({ toggleTheme }) => {
         </li>
         {isAuthenticated ? (
           <li>
-            <button onClick={() => logout()}>Log Out</button>
+            <StyledButtonLink onClick={() => logout()}>
+              Log Out
+            </StyledButtonLink>
           </li>
         ) : (
           <li>
-            <button onClick={() => loginWithRedirect()}>Log In</button>
+            <StyledButtonLink onClick={() => loginWithRedirect()}>
+              Log In
+            </StyledButtonLink>
           </li>
         )}
         <li>
-          <button onClick={toggleTheme}>Toggle Theme</button>
+          <StyledButton onClick={toggleTheme}>Toggle Theme</StyledButton>
         </li>
       </StyledNavItems>
     </StyledNavbar>

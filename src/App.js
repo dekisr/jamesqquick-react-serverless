@@ -15,6 +15,7 @@ import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from './styled/Themes'
 import { Container } from './styled/Container'
 import { Main } from './styled/Main'
+import Loader from './styled/Loader'
 
 function App() {
   const { isLoading } = useAuth0()
@@ -28,7 +29,9 @@ function App() {
           <Container>
             <Navbar toggleTheme={toggleTheme} />
             {isLoading ? (
-              <p>Loading...</p>
+              <Loader>
+                <p>Loading...</p>
+              </Loader>
             ) : (
               <Switch>
                 <Route exact path="/">
