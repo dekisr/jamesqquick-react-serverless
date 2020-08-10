@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -17,6 +17,22 @@ const GameOver = () => {
   if (score === -1) {
     history.push('/')
   }
+
+  const keyUpHandler = useCallback(
+    (e) => {
+      if (e.key === 's') {
+        history.push('/game')
+      }
+    },
+    [history]
+  )
+
+  useEffect(() => {
+    document.addEventListener('keyup', keyUpHandler)
+    return () => {
+      document.removeEventListener('keyup', keyUpHandler)
+    }
+  }, [keyUpHandler])
 
   useEffect(() => {
     const saveHighScore = async () => {
