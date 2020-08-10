@@ -32,7 +32,9 @@ const Navbar = ({ toggleTheme }) => {
         </li>
         {isAuthenticated ? (
           <li>
-            <StyledButtonLink onClick={() => logout()}>
+            <StyledButtonLink
+              onClick={() => logout({ returnTo: window.location.origin })}
+            >
               Log Out
             </StyledButtonLink>
           </li>
